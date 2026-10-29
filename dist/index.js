@@ -38,7 +38,7 @@ const search = async () => {
         params.set("title_like", title);
     }
     if (publisher !== "") {
-        params.set("publisher", title);
+        params.set("publisher", publisher);
     }
     // API Abfrage url bauen
     let url = API_URL;
