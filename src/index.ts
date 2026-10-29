@@ -22,6 +22,15 @@ if (!(select instanceof HTMLSelectElement)) {
     throw new Error("Element #by-publishe not found");
 }
 
+const showError = (error: unknown): void => {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    heading.textContent = "0 Books displayed";
+    tbody.replaceChildren();
+    const cell = tbody.insertRow().insertCell();
+    cell.colSpan = 6;
+    cell.textContent = `Could not load books: ${message}`;
+};
+
 const search = async (): Promise<void> => {
     // formular auslesen
     const data = new FormData(form);
@@ -49,26 +58,24 @@ const search = async (): Promise<void> => {
 
     // books anzeigen
     try {
+        // erneutes auslesen der books (mit such/filter parameter)
         render(await fetchBooks(url));
     } catch (error) {
-        const message = error instanceof Error ? error.message : "Unknown error";
-        tbody.replaceChildren();
-        const cell = tbody.insertRow().insertCell();
-        cell.colSpan = 6;
-        cell.textContent = `Could not load books: ${message}`;
+        showError(error);
     }
 };
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    void search();
+    void search(); // bewusst nicht abgewartet
 });
 
 select.addEventListener("change", () => {
-    void search();
+    void search(); // bewusst nicht abgewartet
 });
 
 const render = (results: Book[]): void => {
+    // anzahl angezeigter books
     heading.textContent = `${results.length} Books displayed`;
     tbody.replaceChildren(
         ...results.map((book) => {
@@ -114,6 +121,18 @@ const renderPublisher = (results: Book[]): void => {
     }
 };
 
-const books = await fetchBooks(API_URL);
-render(books);
-renderPublisher(books);
+// beim laden der seite
+const init = async (): Promise<void> => {
+    try {
+        // initial alle books auslesen ...
+        const books = await fetchBooks(API_URL);
+        // ... und anzeigen
+        render(books);
+        // genauso alle publisher
+        renderPublisher(books);
+    } catch (error) {
+        showError(error);
+    }
+};
+
+void init();
