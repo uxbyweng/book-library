@@ -1,0 +1,28 @@
+{
+    "name": "book-library",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "watch": "live-server --open=index.html"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "devDependencies": {
+        "live-server": "^1.2.2",
+        "typescript": "^7.0.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/uxbyweng/book-library.git"
+    },
+    "bugs": {
+        "url": "https://github.com/uxbyweng/book-library/issues"
+    },
+    "homepage": "https://github.com/uxbyweng/book-library#readme"
+}
