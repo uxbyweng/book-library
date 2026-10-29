@@ -1,10 +1,11 @@
 // src/books.ts
 
+// Typisierung eines 'Book' so wie es von der API kommt
 export interface Book {
     id: string;
     isbn: string;
     title: string;
-    subtitle?: string;
+    subtitle?: string; // optional
     abstract: string;
     author: string;
     publisher: string;
@@ -36,6 +37,7 @@ function isBook(value: unknown): value is Book {
     );
 }
 
+// Bücher von der API fetchen (nur die validen)
 export async function fetchBooks(url: string): Promise<Book[]> {
     const response = await fetch(url);
     if (!response.ok) {

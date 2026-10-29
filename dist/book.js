@@ -20,6 +20,7 @@ function isBook(value) {
         "cover" in value &&
         typeof value.cover === "string");
 }
+// Bücher von der API fetchen (nur die validen)
 export async function fetchBooks(url) {
     const response = await fetch(url);
     if (!response.ok) {
