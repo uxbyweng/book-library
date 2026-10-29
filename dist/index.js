@@ -31,7 +31,7 @@ const render = (results) => {
         row.append(like, title, isbn, author, publisher, detail);
         return row;
     }));
-    h2.textContent = bookCount.toString();
+    h2.textContent = `${bookCount.toString()} Books displayed`;
 };
 const API_URL = "http://localhost:4730/books";
 const books = await fetchBooks(API_URL);

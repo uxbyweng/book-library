@@ -46,7 +46,7 @@ const render = (results: Book[]): void => {
             return row;
         }),
     );
-    h2.textContent = bookCount.toString();
+    h2.textContent = `${bookCount.toString()} Books displayed`;
 };
 
 const API_URL = "http://localhost:4730/books";
