@@ -57,15 +57,25 @@ const render = (results) => {
         row.append(like, title, isbn, author, publisher, detail);
         return row;
     }));
-    select.replaceChildren(...results.map((book) => {
+};
+const renderPublisher = (results) => {
+    // publischer einsammeln (1x je vorkommen mit 'Set')
+    const publishers = new Set();
+    for (const book of results) {
+        publishers.add(book.publisher);
+    }
+    // Dropdown leeren
+    select.innerHTML = "";
+    // eine option pro publisher anlegen
+    for (const name of publishers) {
         const option = document.createElement("option");
-        // const publisher = document.createElement("option");
-        option.textContent = book.publisher;
-        // publisher.append(book.publisher);
-        return option;
-    }));
+        option.value = name; // publisher als value eintrage
+        option.textContent = name;
+        select.append(option);
+    }
 };
 const API_URL = "http://localhost:4730/books";
 const books = await fetchBooks(API_URL);
 render(books);
+renderPublisher(books);
 //# sourceMappingURL=index.js.map
