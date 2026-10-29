@@ -5,7 +5,7 @@ import type { Book } from "./book.js";
 
 const form = document.getElementById("search-form");
 const tbody = document.getElementById("book-table");
-const h2 = document.getElementById("book-count");
+const heading = document.getElementById("book-count");
 
 if (!(form instanceof HTMLFormElement)) {
     throw new Error("Element #search-form not found");
@@ -13,7 +13,7 @@ if (!(form instanceof HTMLFormElement)) {
 if (!(tbody instanceof HTMLTableSectionElement)) {
     throw new Error("Element #book-table not found");
 }
-if (!(h2 instanceof HTMLHeadingElement)) {
+if (!(heading instanceof HTMLHeadingElement)) {
     throw new Error("Element #book-count not found");
 }
 
@@ -21,8 +21,6 @@ function readQuery(form: HTMLFormElement): string {
     const query = new FormData(form).get("query");
     return typeof query === "string" ? query.trim().toLowerCase() : "";
 }
-
-let bookCount: number = 0;
 
 form.addEventListener("submit", async (event) => {
     event.preventDefault(); // reload verhindern
@@ -44,6 +42,7 @@ form.addEventListener("submit", async (event) => {
 });
 
 const render = (results: Book[]): void => {
+    heading.textContent = `${results.length} Books displayed`;
     tbody.replaceChildren(
         ...results.map((book) => {
             const row = document.createElement("tr");
@@ -66,14 +65,10 @@ const render = (results: Book[]): void => {
             const detail = document.createElement("td"); // tbd. detail button
             detail.append();
 
-            // zähle alle Bücher
-            bookCount++;
             row.append(like, title, isbn, author, publisher, detail);
             return row;
         }),
     );
-    // Anzahl der Bücher in der H2 Headline ausgeben
-    h2.textContent = `${bookCount.toString()} Books displayed`;
 };
 
 const API_URL = "http://localhost:4730/books";
