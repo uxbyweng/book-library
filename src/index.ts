@@ -15,6 +15,9 @@ const render = (results: Book[]): void => {
         ...results.map((book) => {
             const row = document.createElement("tr");
 
+            const like = document.createElement("td"); // tbd. like button
+            like.append();
+
             const title = document.createElement("td");
             title.append(book.title);
 
@@ -27,7 +30,10 @@ const render = (results: Book[]): void => {
             const publisher = document.createElement("td");
             publisher.append(book.publisher);
 
-            row.append(title, isbn, author, publisher);
+            const detail = document.createElement("td"); // tbd. detail button
+            detail.append();
+
+            row.append(like, title, isbn, author, publisher, detail);
             return row;
         }),
     );

@@ -8,6 +8,8 @@ if (!(tbody instanceof HTMLTableSectionElement)) {
 const render = (results) => {
     tbody.replaceChildren(...results.map((book) => {
         const row = document.createElement("tr");
+        const like = document.createElement("td"); // tbd. like button
+        like.append();
         const title = document.createElement("td");
         title.append(book.title);
         const isbn = document.createElement("td");
@@ -16,7 +18,9 @@ const render = (results) => {
         author.append(book.author);
         const publisher = document.createElement("td");
         publisher.append(book.publisher);
-        row.append(title, isbn, author, publisher);
+        const detail = document.createElement("td"); // tbd. detail button
+        detail.append();
+        row.append(like, title, isbn, author, publisher, detail);
         return row;
     }));
 };
