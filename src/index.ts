@@ -6,6 +6,7 @@ import type { Book } from "./book.js";
 const form = document.getElementById("search-form");
 const tbody = document.getElementById("book-table");
 const heading = document.getElementById("book-count");
+const select = document.getElementById("by-publisher");
 
 if (!(form instanceof HTMLFormElement)) {
     throw new Error("Element #search-form not found");
@@ -15,6 +16,9 @@ if (!(tbody instanceof HTMLTableSectionElement)) {
 }
 if (!(heading instanceof HTMLHeadingElement)) {
     throw new Error("Element #book-count not found");
+}
+if (!(select instanceof HTMLSelectElement)) {
+    throw new Error("Element #by-publishe not found");
 }
 
 function readQuery(form: HTMLFormElement): string {
@@ -71,6 +75,26 @@ const render = (results: Book[]): void => {
     );
 };
 
+const renderPublisher = (results: Book[]): void => {
+    // publischer einsammeln (1x je vorkommen mit 'Set')
+    const publishers = new Set<string>();
+    for (const book of results) {
+        publishers.add(book.publisher);
+    }
+
+    // Dropdown leeren
+    select.innerHTML = "";
+
+    // eine option pro publisher anlegen
+    for (const name of publishers) {
+        const option = document.createElement("option");
+        option.value = name; // publisher als value eintrage
+        option.textContent = name;
+        select.append(option);
+    }
+};
+
 const API_URL = "http://localhost:4730/books";
 const books = await fetchBooks(API_URL);
 render(books);
+renderPublisher(books);
