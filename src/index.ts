@@ -5,10 +5,16 @@ import { fetchBooks } from "./book.js";
 import type { Book } from "./book.js";
 
 const tbody = document.getElementById("book-table");
+const h2 = document.getElementById("book-count");
 
 if (!(tbody instanceof HTMLTableSectionElement)) {
     throw new Error("Element #book-table not found");
 }
+if (!(h2 instanceof HTMLHeadingElement)) {
+    throw new Error("Element #book-count not found");
+}
+
+let bookCount: number = 0;
 
 const render = (results: Book[]): void => {
     tbody.replaceChildren(
@@ -33,10 +39,14 @@ const render = (results: Book[]): void => {
             const detail = document.createElement("td"); // tbd. detail button
             detail.append();
 
+            // zähle alle Bücher
+            bookCount++;
+            console.log(bookCount);
             row.append(like, title, isbn, author, publisher, detail);
             return row;
         }),
     );
+    h2.textContent = bookCount.toString();
 };
 
 const API_URL = "http://localhost:4730/books";
