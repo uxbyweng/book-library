@@ -32,4 +32,16 @@ export async function fetchBooks(url) {
     }
     return data.filter(isBook);
 }
+// nur ein Book
+export async function fetchBook(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+    }
+    const data = await response.json();
+    if (!isBook(data)) {
+        throw new Error("Unexpected book data");
+    }
+    return data;
+}
 //# sourceMappingURL=book.js.map
