@@ -51,3 +51,20 @@ export async function fetchBooks(url: string): Promise<Book[]> {
 
     return data.filter(isBook);
 }
+
+// nur ein Book
+export async function fetchBook(url: string): Promise<Book> {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    const data: unknown = await response.json();
+
+    if (!isBook(data)) {
+        throw new Error("Unexpected book data");
+    }
+
+    return data;
+}
