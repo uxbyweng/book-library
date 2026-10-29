@@ -6,6 +6,7 @@ import type { Book } from "./book.js";
 const form = document.getElementById("search-form");
 const tbody = document.getElementById("book-table");
 const heading = document.getElementById("book-count");
+const select = document.getElementById("by-publisher");
 
 if (!(form instanceof HTMLFormElement)) {
     throw new Error("Element #search-form not found");
@@ -15,6 +16,9 @@ if (!(tbody instanceof HTMLTableSectionElement)) {
 }
 if (!(heading instanceof HTMLHeadingElement)) {
     throw new Error("Element #book-count not found");
+}
+if (!(select instanceof HTMLSelectElement)) {
+    throw new Error("Element #by-publishe not found");
 }
 
 function readQuery(form: HTMLFormElement): string {
@@ -67,6 +71,15 @@ const render = (results: Book[]): void => {
 
             row.append(like, title, isbn, author, publisher, detail);
             return row;
+        }),
+    );
+    select.replaceChildren(
+        ...results.map((book) => {
+            const option = document.createElement("option");
+            // const publisher = document.createElement("option");
+            option.textContent = book.publisher;
+            // publisher.append(book.publisher);
+            return option;
         }),
     );
 };
