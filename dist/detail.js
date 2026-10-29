@@ -11,14 +11,6 @@ const showError = (error) => {
     text.textContent = `Could not load book: ${message}`;
     mainContainer.replaceChildren(text);
 };
-// eine Zeile der Detailliste: <li><strong>Label:</strong> Wert</li>
-// const createItem = (label: string, value: string): HTMLLIElement => {
-//     const item = document.createElement("li");
-//     const strong = document.createElement("strong");
-//     strong.textContent = `${label}:`;
-//     item.append(strong, ` ${value}`);
-//     return item;
-// };
 // Bokk details rendern
 const render = (book) => {
     // Titel
@@ -85,9 +77,4 @@ const init = async () => {
     }
 };
 void init();
-// console.log("is running");
-// // URL-Paramter 'isbn' auslesen
-// const paramsString = window.location.search;
-// const searchParams = new URLSearchParams(paramsString);
-// console.log(searchParams.get("isbn"));
 //# sourceMappingURL=detail.js.map
