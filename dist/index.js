@@ -1,5 +1,6 @@
 // src/index.ts
 import { fetchBooks } from "./book.js";
+import { getFavorites, toggleFavorite } from "./favorite.js";
 const API_URL = "http://localhost:4730/books";
 const form = document.getElementById("search-form");
 const tbody = document.getElementById("book-table");
@@ -65,17 +66,25 @@ select.addEventListener("change", () => {
 const render = (results) => {
     // anzahl angezeigter books
     heading.textContent = `${results.length} Books displayed`;
+    // isbns aller favoriten, um das herz richtig anzuzeigen
+    const favoriteIsbns = getFavorites().map((favorite) => favorite.isbn);
     tbody.replaceChildren(...results.map((book) => {
         const row = document.createElement("tr");
         const like = document.createElement("td");
-        const likeButton = document.createElement("button");
-        likeButton.className = "button button-clear fav-btn";
-        likeButton.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="fav">
+        const likeLink = document.createElement("a");
+        likeLink.href = "#";
+        likeLink.className = "button button-clear fav-btn fav-toggle";
+        likeLink.classList.toggle("is-fav", favoriteIsbns.includes(book.isbn));
+        likeLink.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fav">
                     <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                 </svg>
             `;
-        like.append(likeButton);
+        likeLink.addEventListener("click", (event) => {
+            event.preventDefault(); // kein sprung nach '#'
+            likeLink.classList.toggle("is-fav", toggleFavorite(book));
+        });
+        like.append(likeLink);
         const title = document.createElement("td");
         title.append(book.title);
         const isbn = document.createElement("td");

@@ -13,6 +13,9 @@ export interface Book {
     cover: string;
 }
 
+// Einzelner Favorit
+export type FavoriteBook = Pick<Book, "isbn" | "title" | "author" | "publisher">;
+
 function isBook(value: unknown): value is Book {
     // Type Guard
     return (
