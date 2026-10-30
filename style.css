@@ -52,6 +52,17 @@ main .fav-btn {
     height: 100%;
 }
 
+/* herz: nur outline (kein favorit) */
+.fav-toggle .fav {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+/* herz: gefüllt (favorit) */
+.fav-toggle.is-fav .fav {
+    fill: currentColor;
+}
+
 .first-col {
     width: 5%;
 }
